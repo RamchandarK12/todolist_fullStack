@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+        }
+        form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px 0 0 8px;
+        }
+        button {
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+        }
+        .task {
+            padding: 12px;
+            background: #f8f9fa;
+            margin: 8px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .done {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ My To-Do List</h1>
+        
+        <form action="/add" method="POST">
+            <input type="text" name="task" placeholder="What needs to be done?" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <h2>Your Tasks ({{ tasks|length }})</h2>
+        {% for task in tasks %}
+            <div class="task {% if task.done %}done{% endif %}">
+                <span>{{ task.task }}</span>
+                <div>
+                    <a href="/done/{{ task.id }}" style="margin-right: 10px; text-decoration: none;">✅</a>
+                    <a href="/delete/{{ task.id }}" style="color: red; text-decoration: none;">🗑</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
